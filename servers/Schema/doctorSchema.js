@@ -40,6 +40,10 @@ const doctorSchema = new mongoose.Schema({
         type: String,
         required: true,
       },
+      end_time:{
+        type: String,
+        required: true,
+      },          
       location: {
         type: String,
         required: true,
