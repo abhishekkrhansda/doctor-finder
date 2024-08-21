@@ -1,15 +1,12 @@
-require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const { db } = require('./db/db.js');
-const { getDoctorsByCity } = require('./Test/testDoctor.js');
 const authRouter = require('./auth/auth.js');
-
+const Doctor = require('./Schema/doctorSchema.js');
 const User = require('./Schema/userSchema.js');
 
 const app = express();
 
-// Middleware
 app.use(express.json());
 app.use(cors());
 
@@ -24,7 +21,7 @@ app.get('/doctors', async (req, res) => {
       return res.status(400).json({ msg: 'User not found' });
     }
 
-    const doctorsInCity = getDoctorsByCity(user.location);
+    const doctorsInCity = await Doctor.find({ city: user.location });
 
     if (doctorsInCity.length === 0) {
       return res.status(404).json({ msg: 'No doctors found in your location' });
@@ -52,4 +49,5 @@ const server = () => {
 };
 
 server();
+
 

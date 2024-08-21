@@ -1,14 +1,9 @@
-require('dotenv').config();
 const express = require('express');
 const { body, validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
 const User = require('../Schema/userSchema');
-const { getDoctorsByCity } = require('../Test/testDoctor');
-const { getAllUniqueCities } = require('../components/city');
-
-// Import the configured multer instance
-const upload = require('../multer/multer');  // Update the path to the location of your multer configuration
-
+const Doctor = require('../Schema/doctorSchema');  // Import the Doctor model
+const upload = require('../multer/multer');
 const router = express.Router();
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -17,7 +12,7 @@ router.post('/register', upload.single('image'), [
     body('username').isLength({ min: 3 }).trim(),
     body('email').isLength({ min: 10 }).isEmail(),
     body('password').isLength({ min: 5 }),
-    body('location').isLength({ min: 2 }).trim() // Validate location
+    body('location').isLength({ min: 2 }).trim() 
 ], async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -36,7 +31,7 @@ router.post('/register', upload.single('image'), [
             email,
             password, // Ensure to hash the password before saving
             location,
-            image: req.file ? req.file.path : null // Save the image path
+            image: req.file ? req.file.path : null
         });
 
         await user.save();
@@ -76,7 +71,7 @@ router.post('/login', [
         const payload = { user: { id: user.id } };
         const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' });
 
-        const doctorsInCity = getDoctorsByCity(user.location);
+        const doctorsInCity = await Doctor.find({ city: user.location });
 
         if (doctorsInCity.length === 0) {
             return res.status(404).json({ msg: 'No doctors found in your city' });
@@ -90,10 +85,5 @@ router.post('/login', [
     }
 });
 
-// Get all unique cities where doctors are available
-router.get('/places', (req, res) => {
-    const cities = getAllUniqueCities();
-    res.json(cities);
-});
-
 module.exports = router;
+

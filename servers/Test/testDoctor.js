@@ -204,7 +204,7 @@ const doctors=[
       
 ]
 
-module.exports={doctors};
+
 function getDoctorsByCity(city) {
     return doctors.filter(doctor => doctor.city.toLowerCase() === city.toLowerCase());
   }
