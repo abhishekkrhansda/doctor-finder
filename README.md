@@ -24,8 +24,7 @@ Before you begin, ensure you have the following installed:
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/yourusername/doctor-appointment-backend.git
-   cd doctor-appointment-backend
+   git clone hhttps://github.com/abhishekkrhansda/doctor-finder.git
 
 
   ## 2 Set up environment variables
