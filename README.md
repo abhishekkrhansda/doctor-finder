@@ -26,3 +26,61 @@ Before you begin, ensure you have the following installed:
    ```bash
    git clone https://github.com/yourusername/doctor-appointment-backend.git
    cd doctor-appointment-backend
+
+
+  ## 2 Set up environment variables
+
+  ## Create a .env file in the root of your project and add the following variables:
+
+
+## LOGIN
+
+- POST /api/auth/login
+
+
+ ## GET DOCTOR
+
+- GET /doctors
+-Headers:
+
+
+
+## BOOK APPOINTMENTS
+
+POST /api/book/book
+Body Parameters:
+
+
+
+## TO LOGIN AS DOCTOR
+POST /api/doctor/login
+Body Parameters:
+
+
+## Folder Structure
+
+
+- **├── .env                 # Environment variables
+- **├── db                   # Database connection
+- **│   └── db.js
+- **├── multer               # Multer configuration for file uploads
+- **│   └── multer.js
+- **├── routes               # Express routes
+- **│   ├── auth.js
+- **│   ├── bookingRoute.js
+- │   └── doctorRoute.js
+- ├── Schema               # Mongoose schemas
+- │   ├── bookingSchema.js
+- │   ├── userSchema.js
+- │   └── doctorSchema.js
+- ├── Test                 # Mock data and test utilities
+- │   └── testDoctor.js
+- ├── app.js               # Main application file
+- └── server.js   # Server configuration
+
+##Running Tests
+To run the tests, you can use:
+
+- npm test
+## Contributing
+Contributions are welcome! Please create a pull request or open an issue for any bugs or feature requests.
